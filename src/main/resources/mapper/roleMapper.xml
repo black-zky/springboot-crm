@@ -33,4 +33,13 @@
         FROM sys_user_role ur INNER JOIN sys_role r ON ur.rid=r.id
         WHERE ur.uid=#{uid}
     </select>
+
+    <select id="selectRolesByProperty" parameterType="String" resultType="role">
+        SELECT * FROM sys_role
+        <where>
+            <if test="rolename!=null and rolename!=''">
+                AND rolename LIKE concat('%', #{rolename}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

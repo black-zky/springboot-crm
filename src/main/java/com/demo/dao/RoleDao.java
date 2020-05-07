@@ -1,5 +1,6 @@
 package com.demo.dao;
 
+import com.demo.param.RoleVo;
 import com.demo.pojo.Role;
 import org.springframework.stereotype.Repository;
 
@@ -27,4 +28,6 @@ public interface RoleDao {
     public List<Role> selectRolesByPerid(int perid);
 
     public Set<String> selectRoleNamesByUid(int uid);
+
+    List<Role> selectRolesByProperty(RoleVo roleVo);
 }

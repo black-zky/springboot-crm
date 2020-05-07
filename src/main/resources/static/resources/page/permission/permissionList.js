@@ -5,28 +5,28 @@ layui.use(['form','layer','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //用户列表
+    //角色列表
     var tableIns = table.render({
-        elem: '#userList',
-        url : '/users',
+        elem: '#permissionList',
+        url : '/permissions',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
         limits : [10,15,20,25],
-        limit : 2,
-        id : "userListTable",
+        limit : 10,
+        id : "permissionListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'telephone', title: '电话', minWidth:100, align:"center"},
-            {field: 'realname', title: '姓名', minWidth:100, align:"center"},
-            {field: 'birthday', title: '生日', minWidth:100, align:"center"},
-            {field: 'available', title: '状态', align:'center', templet:function (row) {
-                    return row.available==1?"启用":"禁用";
+            {field: 'type', title: '类型', minWidth:100, align:"center"},
+            {field: 'name', title: '权限名', minWidth:100, align:"center"},
+            {field: 'icon', title: '图标', minWidth:100, align:"center", templet:function (row) {
+                    return '<i class="layui-icon">'+ row.icon +'</i>';
                 }},
-            {field: 'dept', title: '部门',  align:'center', templet:function (row) {
-                    return row.dept.dname;
+            {field: 'href', title: '链接', minWidth:100, align:"center"},
+            {field: 'open', title: '状态', align:'center', templet:function (row) {
+                    return row.open==1?"开放":"关闭";
                 }},
-            {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
+            {title: '操作', minWidth:175, templet:'#permissionListBar',fixed:"right",align:"center"}
         ]]
     });
 
@@ -41,7 +41,7 @@ layui.use(['form','layer','table','laytpl'],function(){
         //     }
         // })
         var name = $(".searchVal").val();
-        table.reload('userListTable', {url: "users?realname=" + name});
+        table.reload('permissionListTable', {url: "permissions?name=" + name});
     });
 
     // $('#search_input').bind('keyup', function(event) {

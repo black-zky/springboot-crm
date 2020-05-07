@@ -47,17 +47,16 @@ public class LoginController {
         }
     }
 
-//    @GetMapping("/users")
-//    public DataGridView findUsersByPage(UserVo userVo){
-//        DataGridView dgv = userService.getUserListByPage(userVo);
-//        return dgv;
-//    }
-
     @GetMapping("/users")
-    public DataGridView findUsersByPage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int limit){
-        UserVo userVo = new UserVo(page,limit);
+    public DataGridView findUsersByPage(UserVo userVo){
         DataGridView dgv = userService.getUserListByPage(userVo);
         return dgv;
     }
 
+//    @GetMapping("/users")
+//    public DataGridView findUsersByPage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int limit){
+//        UserVo userVo = new UserVo(page,limit);
+//        DataGridView dgv = userService.getUserListByPage(userVo);
+//        return dgv;
+//    }
 }

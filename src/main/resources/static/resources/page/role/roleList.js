@@ -5,28 +5,20 @@ layui.use(['form','layer','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //用户列表
+    //角色列表
     var tableIns = table.render({
-        elem: '#userList',
-        url : '/users',
+        elem: '#roleList',
+        url : '/roles',
         cellMinWidth : 95,
         page : true,
         height : "full-125",
         limits : [10,15,20,25],
         limit : 2,
-        id : "userListTable",
+        id : "roleListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'telephone', title: '电话', minWidth:100, align:"center"},
-            {field: 'realname', title: '姓名', minWidth:100, align:"center"},
-            {field: 'birthday', title: '生日', minWidth:100, align:"center"},
-            {field: 'available', title: '状态', align:'center', templet:function (row) {
-                    return row.available==1?"启用":"禁用";
-                }},
-            {field: 'dept', title: '部门',  align:'center', templet:function (row) {
-                    return row.dept.dname;
-                }},
-            {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
+            {field: 'rolename', title: '角色名', minWidth:100, width:200, align:"center"},
+            {title: '操作', minWidth:175, templet:'#roleListBar',fixed:"right",align:"center"}
         ]]
     });
 
@@ -41,7 +33,7 @@ layui.use(['form','layer','table','laytpl'],function(){
         //     }
         // })
         var name = $(".searchVal").val();
-        table.reload('userListTable', {url: "users?realname=" + name});
+        table.reload('roleListTable', {url: "roles?rolename=" + name});
     });
 
     // $('#search_input').bind('keyup', function(event) {

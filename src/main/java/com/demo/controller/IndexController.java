@@ -48,4 +48,13 @@ public class IndexController {
         return "user/userList";
     }
 
+    @RequestMapping(value = "/toRoleManager.do")
+    public String toRoleManager(){
+        return "role/roleList";
+    }
+
+    @RequestMapping(value = "/toPermissionManager.do")
+    public String toPermissionManager(){
+        return "per/perList";
+    }
 }

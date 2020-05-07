@@ -35,4 +35,13 @@
         FROM sys_user_role ur,sys_role_permission rp,sys_permission per
         WHERE ur.rid=rp.rid AND rp.perid=per.id AND per.type='menu' AND ur.uid=#{uid}
     </select>
+
+    <select id="selectPermissionsByProperty" parameterType="String" resultType="permission">
+        SELECT * FROM sys_permission
+        <where>
+            <if test="name!=null and name!=''">
+                AND name LIKE concat('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

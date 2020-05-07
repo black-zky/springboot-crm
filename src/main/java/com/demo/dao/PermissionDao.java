@@ -1,6 +1,8 @@
 package com.demo.dao;
 
+import com.demo.param.PermissionVo;
 import com.demo.pojo.Permission;
+import com.demo.pojo.Role;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +25,6 @@ public interface PermissionDao {
      * @return
      */
     public List<Permission> selectMenusByUid(int uid);
+
+    List<Permission> selectPermissionsByProperty(PermissionVo permissionVo);
 }
