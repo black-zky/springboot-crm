@@ -1,0 +1,54 @@
+spring:
+  #数据源配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rbac_67?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT1FROMDUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    logSlowSql: true
+  #thymeleaf配置
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    cache: false
+  #热部署的配置
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+#mybatis的配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.demo.pojo
+#日志的设置
+logging:
+  level:
+    com:
+      demo: debug
+shiro:
+  hash-algorithm-name: md5
+  hash-iterations: 1024
+  login-url: /login.html
+  unauthorized-url: /login.html
+  anon-urls:
+    - /login.html
+    - /login.do
+    - /resources/** #静态文件放行
+  authc-urls:
+    - /**
+#分页插件
+pagehelper:
+  helper-dialect: mysql
