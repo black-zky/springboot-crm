@@ -13,7 +13,7 @@ layui.use(['form','layer','table','laytpl'],function(){
         page : true,
         height : "full-125",
         limits : [10,15,20,25],
-        limit : 2,
+        limit : 10,
         id : "userListTable",
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
@@ -56,18 +56,18 @@ layui.use(['form','layer','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加用户",
             type : 2,
-            content : "userAdd.html",
+            content : "toUserAddPage.do",
             success : function(layero, index){
-                var body = layui.layer.getChildFrame('body', index);
-                if(edit){
-                    body.find(".userName").val(edit.userName);  //登录名
-                    body.find(".userEmail").val(edit.userEmail);  //邮箱
-                    body.find(".userSex input[value="+edit.userSex+"]").prop("checked","checked");  //性别
-                    body.find(".userGrade").val(edit.userGrade);  //会员等级
-                    body.find(".userStatus").val(edit.userStatus);    //用户状态
-                    body.find(".userDesc").text(edit.userDesc);    //用户简介
-                    form.render();
-                }
+                // var body = layui.layer.getChildFrame('body', index);
+                // if(edit){
+                //     body.find(".userName").val(edit.userName);  //登录名
+                //     body.find(".userEmail").val(edit.userEmail);  //邮箱
+                //     body.find(".userSex input[value="+edit.userSex+"]").prop("checked","checked");  //性别
+                //     body.find(".userGrade").val(edit.userGrade);  //会员等级
+                //     body.find(".userStatus").val(edit.userStatus);    //用户状态
+                //     body.find(".userDesc").text(edit.userDesc);    //用户简介
+                //     form.render();
+                // }
                 setTimeout(function(){
                     layui.layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
@@ -90,18 +90,24 @@ layui.use(['form','layer','table','laytpl'],function(){
     $(".delAll_btn").click(function(){
         var checkStatus = table.checkStatus('userListTable'),
             data = checkStatus.data,
-            newsId = [];
+            userIds = [];
         if(data.length > 0) {
             for (var i in data) {
-                newsId.push(data[i].newsId);
+                userIds.push(data[i].id);
             }
             layer.confirm('确定删除选中的用户？', {icon: 3, title: '提示信息'}, function (index) {
-                // $.get("删除文章接口",{
-                //     newsId : newsId  //将需要删除的newsId作为参数传入
-                // },function(data){
-                tableIns.reload();
-                layer.close(index);
-                // })
+                $.delete("users",{
+                    userIds : userIds  //将需要删除的newsId作为参数传入
+                },function(res){
+                    if(res.code==200){
+                        layer.msg("删除成功");
+                        tableIns.reload();
+                        layer.close(index);
+                    } else{
+                        layer.msg("删除成功");
+                    }
+
+                })
             })
         }else{
             layer.msg("请选择需要删除的用户");

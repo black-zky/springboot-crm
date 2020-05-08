@@ -19,6 +19,8 @@ public interface UserService {
 
     public boolean deleteUesr(int uid, String path);
 
+    public boolean deleteUesrs(int[] uids);
+
     public User findUserByTel(String telephone);
 
     Set<String> selectRoleNamesByUid(int uid);

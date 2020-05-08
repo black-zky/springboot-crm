@@ -70,6 +70,21 @@ public class UserServiceImpl implements UserService {
         return flag;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean deleteUesrs(int[] uids) {
+        if(uids!=null && uids.length!=0){
+            for (int uid:uids){
+                if(!deleteUesr(uid,"")){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public Set<String> selectRoleNamesByUid(int uid) {
         return roleDao.selectRoleNamesByUid(uid);

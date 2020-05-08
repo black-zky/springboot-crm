@@ -1,43 +1,67 @@
-layui.use(['form','layer'],function(){
+layui.use(['form', 'layer', 'laydate', 'upload'], function () {
     var form = layui.form
-        layer = parent.layer === undefined ? layui.layer : top.layer,
-        $ = layui.jquery;
+    layer = parent.layer === undefined ? layui.layer : top.layer,
+        $ = layui.jquery,
+        laydate = layui.laydate,
+        upload = layui.upload;
 
-    form.on("submit(addUser)",function(data){
+    //执行一个laydate实例
+    laydate.render({
+        elem: '.birthday' //指定元素
+    });
+
+    upload.render({
+        elem: '#test1' //绑定元素
+        , url: '/uploadImage.do/' //上传接口,
+        , field: "headImage" //指定文件域名
+        , done: function (res) {
+            console.log(res);
+            layer.msg(res.msg);
+            $("#himg").val(res.data);
+        }
+        , error: function () {
+            //请求异常回调
+        }
+        , before: function (res) {
+            //上传之前预读本地文件示例
+            res.preview(function (index, file, result) {
+                $("#demo1").attr("src", result);
+            })
+        }
+    });
+
+    //请求获取数据
+    //动态绑定下拉菜单的数据
+    var html;
+    $.ajax({
+        url: '/depts',
+        type: 'GET',
+        success: function (res) {
+            var data = res.data;
+            html += "<option value=''>------------请选择------------</option>"
+            for (i = 0; i < data.length; i++) {
+                html += ("<option value='" + data[i].id + "'>" + data[i].dname + "</option>")
+            }
+            $("#userDept").append(html);
+            form.render('select');
+        }
+    });
+
+    form.on("submit(addUser)", function (data) {
         //弹出loading
-        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-        // 实际使用时的提交信息
-        // $.post("上传路径",{
-        //     userName : $(".userName").val(),  //登录名
-        //     userEmail : $(".userEmail").val(),  //邮箱
-        //     userSex : data.field.sex,  //性别
-        //     userGrade : data.field.userGrade,  //会员等级
-        //     userStatus : data.field.userStatus,    //用户状态
-        //     newsTime : submitTime,    //添加时间
-        //     userDesc : $(".userDesc").text(),    //用户简介
-        // },function(res){
-        //
-        // })
-        setTimeout(function(){
-            top.layer.close(index);
-            top.layer.msg("用户添加成功！");
-            layer.closeAll("iframe");
-            //刷新父页面
-            parent.location.reload();
-        },2000);
+        var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
+        var params=$('#dataform').serialize();
+        console.log(params);
+        $.post('/users',params,function (res) {
+            if(res.code==1003){
+                top.layer.close(index);
+                top.layer.msg(res.msg);
+                var index=parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+                parent.location.reload();
+            }
+        },'json');
+
         return false;
     })
-
-    //格式化时间
-    function filterTime(val){
-        if(val < 10){
-            return "0" + val;
-        }else{
-            return val;
-        }
-    }
-    //定时发布
-    var time = new Date();
-    var submitTime = time.getFullYear()+'-'+filterTime(time.getMonth()+1)+'-'+filterTime(time.getDate())+' '+filterTime(time.getHours())+':'+filterTime(time.getMinutes())+':'+filterTime(time.getSeconds());
-
 })

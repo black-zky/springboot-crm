@@ -33,7 +33,8 @@ public class FastJsonJavaConfig {
                 SerializerFeature.WriteMapNullValue,
                 SerializerFeature.PrettyFormat,
                 SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteNullStringAsEmpty);
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.DisableCircularReferenceDetect);
         converter.setFastJsonConfig(jsonConfig);
         //处理中文乱码问题
         List<MediaType> fastMediaTypes = new ArrayList<>();
