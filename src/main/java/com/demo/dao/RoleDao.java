@@ -1,7 +1,9 @@
 package com.demo.dao;
 
 import com.demo.param.RoleVo;
+import com.demo.pojo.Permission;
 import com.demo.pojo.Role;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,4 +32,10 @@ public interface RoleDao {
     public Set<String> selectRoleNamesByUid(int uid);
 
     List<Role> selectRolesByProperty(RoleVo roleVo);
+
+    List<Permission> selectPermissionsByRid(int rid);
+
+    int deleteRolePermissionsByRid(int rid);
+
+    int insertRolePermission(@Param("rid") int rid, @Param("perid") int perid);
 }

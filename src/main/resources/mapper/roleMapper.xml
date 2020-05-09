@@ -42,4 +42,16 @@
             </if>
         </where>
     </select>
+
+    <select id="selectPermissionsByRid" parameterType="int" resultType="permission">
+        SELECT p.* FROM sys_role_permission rp, sys_permission p
+        WHERE rp.perid=p.id AND rp.rid=#{rid}
+    </select>
+    
+    <delete id="deleteRolePermissionsByRid" parameterType="int">
+        DELETE FROM sys_role_permission WHERE rid=#{rid}
+    </delete>
+    <insert id="insertRolePermission">
+        INSERT INTO sys_role_permission(rid,perid) VALUES (#{rid}, #{perid})
+    </insert>
 </mapper>

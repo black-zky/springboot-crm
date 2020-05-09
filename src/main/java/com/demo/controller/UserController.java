@@ -93,10 +93,10 @@ public class UserController extends BaseController{
     public ResultDto grantRoles(int uid, @RequestParam(value = "rids[]") int[] rids){
         try {
             userService.grantRoles(uid,rids);
-            return ResultDto.USERROLE_GRANT_SUCCESS;
+            return ResultDto.USER_ROLE_GRANT_SUCCESS;
         } catch (Exception e){
             e.printStackTrace();
-            return ResultDto.USERROLE_GRANT_FAIL;
+            return ResultDto.USER_ROLE_GRANT_FAIL;
         }
     }
 }

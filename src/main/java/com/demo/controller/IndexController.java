@@ -58,6 +58,11 @@ public class IndexController {
         return "user/userRole";
     }
 
+    @RequestMapping(value = "/toRolePermission.do")
+    public String toRolePermission(){
+        return "role/rolePermission";
+    }
+
     @RequestMapping(value = "/toRoleManager.do")
     public String toRoleManager(){
         return "role/roleList";

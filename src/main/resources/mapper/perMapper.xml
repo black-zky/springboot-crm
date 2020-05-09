@@ -11,7 +11,7 @@
         <result property="href" column="href"></result>
         <result property="open" column="open"></result>
         <collection property="roles"
-                    select="com.demo.dao.RoleMapper.selectRolesByPerid"
+                    select="com.demo.dao.RoleDao.selectRolesByPerid"
                     column="id">
         </collection>
     </resultMap>
