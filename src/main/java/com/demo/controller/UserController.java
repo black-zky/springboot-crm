@@ -1,15 +1,20 @@
 package com.demo.controller;
 
+import com.demo.param.DataGridView;
+import com.demo.param.RoleVo;
+import com.demo.pojo.Role;
 import com.demo.pojo.User;
+import com.demo.service.RoleService;
 import com.demo.service.UserService;
 import com.demo.utils.ResultDto;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class UserController extends BaseController{
@@ -17,6 +22,8 @@ public class UserController extends BaseController{
 
     @Autowired
     UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @PostMapping("/users")
     public ResultDto addUser(User user){
@@ -61,5 +68,35 @@ public class UserController extends BaseController{
             dto.setMsg("删除失败");
         }
         return dto;
+    }
+
+    @GetMapping(value = "/users/initRolesByUid")
+    public DataGridView initRolesByUid(int uid){
+        List<Role> allroles=roleService.selectAllRoles();
+        List<Role> roles = userService.findRolesByUid(uid);
+        List<RoleVo> roleVos = new ArrayList<>();
+        for(Role role: allroles){
+            RoleVo roleVo=new RoleVo();
+            roleVo.setId(role.getId());
+            roleVo.setRolename(role.getRolename());
+            for(Role role2: roles){
+                if(role2.getId()==role.getId()){
+                    roleVo.setLAY_CHECKED(true);
+                }
+            }
+            roleVos.add(roleVo);
+        }
+        return new DataGridView((long) allroles.size(),roleVos);
+    }
+
+    @GetMapping(value = "/users/grantRoles.do")
+    public ResultDto grantRoles(int uid, @RequestParam(value = "rids[]") int[] rids){
+        try {
+            userService.grantRoles(uid,rids);
+            return ResultDto.USERROLE_GRANT_SUCCESS;
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResultDto.USERROLE_GRANT_FAIL;
+        }
     }
 }

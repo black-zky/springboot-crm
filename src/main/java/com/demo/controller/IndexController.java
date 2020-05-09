@@ -53,6 +53,11 @@ public class IndexController {
         return "user/userAdd";
     }
 
+    @RequestMapping(value = "/toUserRolePage.do")
+    public String toUserRolePage(){
+        return "user/userRole";
+    }
+
     @RequestMapping(value = "/toRoleManager.do")
     public String toRoleManager(){
         return "role/roleList";

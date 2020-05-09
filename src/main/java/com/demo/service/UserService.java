@@ -2,8 +2,10 @@ package com.demo.service;
 
 import com.demo.param.DataGridView;
 import com.demo.param.UserVo;
+import com.demo.pojo.Role;
 import com.demo.pojo.User;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {
@@ -33,4 +35,12 @@ public interface UserService {
      * @return
      */
     public DataGridView getUserListByPage(UserVo userVo);
+
+    List<Role> findRolesByUid(int uid);
+
+    boolean addRolesByUid(int uid, int[] rids);
+
+    boolean deleteRolesByUid(int uid);
+
+    boolean grantRoles(int uid, int[] rids);
 }

@@ -100,4 +100,38 @@ public class UserServiceImpl implements UserService {
         List<User> users = userDao.selectUsersByProperty(userVo);
         return new DataGridView(page.getTotal(),users);
     }
+
+    @Override
+    public List<Role> findRolesByUid(int uid) {
+        List<Role> roles = userDao.selectRolesByUid(uid);
+        return roles;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean addRolesByUid(int uid, int[] rids) {
+        boolean flag = false;
+        if(rids!=null&&rids.length>0){
+            for (int rid:rids){
+                int res = userDao.insertUserRole(uid, rid);
+                if(res==0){
+                    return false;
+                }
+                flag=true;
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean deleteRolesByUid(int uid) {
+        int res = userDao.deleteRolesByUid(uid);
+        return true;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean grantRoles(int uid, int[] rids) {
+        return deleteRolesByUid(uid) && addRolesByUid(uid,rids);
+    }
 }

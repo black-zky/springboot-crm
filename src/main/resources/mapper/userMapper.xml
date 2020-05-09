@@ -67,4 +67,16 @@
             </if>
         </where>
     </select>
+
+    <select id="selectRolesByUid" parameterType="int" resultType="role">
+        SELECT * FROM sys_role WHERE id IN(
+        (SELECT rid FROM sys_user_role WHERE uid=#{uid})
+        )
+    </select>
+    <insert id="insertRolesByUid">
+        INSERT INTO sys_user_role(uid,rid) VALUES(#{uid},#{rid})
+    </insert>
+    <delete id="deleteRolesByUid" parameterType="int">
+        DELETE FROM sys_user_role WHERE uid=#{uid}
+    </delete>
 </mapper>

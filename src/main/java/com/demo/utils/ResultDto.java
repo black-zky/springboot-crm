@@ -18,6 +18,9 @@ public class ResultDto {
     public static final ResultDto USER_ADD_FAIL=new ResultDto(-1003,"添加用户失败");
     public static final ResultDto USER_EXITS=new ResultDto(-1004,"用户已存在");
 
+    public static final ResultDto USERROLE_GRANT_SUCCESS=new ResultDto(1005,"分配用户角色成功");
+    public static final ResultDto USERROLE_GRANT_FAIL=new ResultDto(-1005,"分配用户角色失败");
+
     private int code;
     private String msg;
     private Object data;

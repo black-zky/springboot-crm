@@ -1,5 +1,6 @@
 package com.demo.dao;
 
+import com.demo.pojo.Role;
 import com.demo.pojo.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -52,5 +53,11 @@ public interface UserDao {
      * @return
      */
     public List<User> selectUsersByProperty(User user);
+
+    List<Role> selectRolesByUid(int uid);
+
+    int insertRoleByUid(@Param("uid") int uid, @Param("rid") int rid);
+
+    int deleteRolesByUid(int uid);
 }
 
